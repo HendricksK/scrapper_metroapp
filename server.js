@@ -8,7 +8,8 @@ var exec = require('child_process').exec;
 
 app.get('/scrape', function(req, res){
 
-	url = 'http://capetowntrains.freeblog.site/timetables'
+	var url = 'http://capetowntrains.freeblog.site/timetables'
+	var count = 0
 
 	request(url, function(error, response, html) {
 		if(!error) {
@@ -22,11 +23,12 @@ app.get('/scrape', function(req, res){
 				if (data.attr('href')) {
 					if(data.attr('href').includes('storage')) {
 						console.log(data.attr('href'))
-						var wget = 'wget /downloads/metro/pdfs/' + ' ' + data.attr('href').replace(/(?=[() ])/g, '\\')
+						var wget = 'wget -O downloads/metro/pdfs/' + count + '.pdf' + ' ' + data.attr('href').replace(/(?=[() ])/g, '\\')
 						exec(wget, {maxBuffer: 1024 * 5000}, function(err) {
 							if(err) throw err
 							else console.log('file downloaded')
 						})
+						count++
 					}
 				}
 			})
