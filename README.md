@@ -12,3 +12,7 @@ SCOTCH.IO
 #2 then need to parse to json
 #3 add controller to push data to API
 #4 then build a CRON to do this once a week???
+
+looking into another PDF parser, pdftojson is not working well, almost sure its because of the shitty way these PDFs are formatted
+
+#https://github.com/dbashford/textract

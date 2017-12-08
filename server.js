@@ -1,10 +1,11 @@
 var express = require('express')
-var fs 		= require('fs')
 var request = require('request')
 var cheerio = require('cheerio')
 var app     = express()
 var https 	= require('https')
-var exec = require('child_process').exec;
+var exec = require('child_process').exec
+//let instantiations 
+let fs 		= require('fs'), PDFParser = require('pdf2json')
 
 app.get('/scrape', function(req, res){
 
@@ -35,6 +36,22 @@ app.get('/scrape', function(req, res){
 		}
 	})
 
+})
+
+app.get('/pdf-json', function(req, res) {
+
+ 	var pdfFilePath = 'downloads/metro/pdfs/28.pdf'
+
+	let pdfParser = new PDFParser(this,1) 
+ 
+    pdfParser.on('pdfParser_dataError', errData => console.error(errData.parserError))
+    pdfParser.on('pdfParser_dataReady', pdfData => {
+    	fs.writeFile('fields.json', pdfParser.getAllFieldsTypes())
+        fs.writeFile('content.json', pdfParser.getRawTextContent())
+    })
+
+    pdfParser.loadPDF(pdfFilePath)
+    
 })
 
 app.listen('8081')
