@@ -24,7 +24,7 @@ app.get('/scrape', function(req, res){
 					if(data.attr('href').includes('storage')) {
 						console.log(data.attr('href'))
 						var wget = 'wget -O downloads/metro/pdfs/' + count + '.pdf' + ' ' + data.attr('href').replace(/(?=[() ])/g, '\\')
-						exec(wget, {maxBuffer: 1024 * 5000}, function(err) {
+						exec(wget, {maxBuffer: 1024 * 3000}, function(err) {
 							if(err) throw err
 							else console.log('file downloaded')
 						})
