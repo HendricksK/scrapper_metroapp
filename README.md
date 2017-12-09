@@ -15,4 +15,6 @@ SCOTCH.IO
 
 looking into another PDF parser, pdftojson is not working well, almost sure its because of the shitty way these PDFs are formatted
 
-#https://github.com/dbashford/textract
+#https://www.npmjs.com/package/pdf-to-text
+PDF to text works, follow install instructions 
+can build json with this, currently just a string

@@ -7,7 +7,9 @@
   "dependencies": {
     "cheerio": "latest",
     "express": "latest",
+    "pdf-to-text": "0.0.6",
     "pdf2json": "^1.1.7",
-    "request": "latest"
+    "request": "latest",
+    "textract": "^2.2.0"
   }
 }
