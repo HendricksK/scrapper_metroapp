@@ -8,6 +8,7 @@ var LineByLineReader = require('line-by-line')
 //let instantiations 
 let fs 		= require('fs'), PDFParser = require('pdf2json')
 let fileName = ''
+let lineCount = 0
 
 app.get('/scrape', function(req, res){
 
@@ -66,7 +67,7 @@ app.get('/pdf-util', function(req, res) {
 	pdfUtil.info(pdf_path, function(err, info) {
 		if (err) throw(err)
 		console.log(info)
-		fileName = info.title
+		fileName = info
 	})
 	 
 	//Omit option to extract all text from the pdf file 
@@ -76,37 +77,70 @@ app.get('/pdf-util', function(req, res) {
 		jsonData[0] = data
 		fs.writeFile(fileName + '.txt', data)
 		fs.writeFile('content_json.json', jsonData[0]) 
-		res.send(data)    
+		res.send(JSON.stringify(fileName) + '<br>' + data)    
 	})
 
 })
 
 app.get('/line-by-line', function(req, res) {
 
+	var jsonObj = {}, jsonObj2 = {}, count = 0, doc = '', jsonObj3 = {}
+
     var lr = new LineByLineReader('DOCS_CMR3-#259623-v12-POCKET_NORTH_2014.XLS.txt')
 
 	lr.on('error', function (err) {
-	// 'err' contains error object
+		// 'err' contains error object
 		console.log(err)
 	})
 
-	lr.on('line', function (line) {
-		console.log(line)
-	// pause emitting of lines...
+	lr.on('line', function (line, ) {
+		// pause emitting of lines...
 		lr.pause()
+
+		if(lineCount == 0) {
+			jsonObj2[0] = line.trim()
+		}
+
+		if(line.includes('TRAIN NO')) {
+			line = line.replace('TRAIN NO.', '')
+			line = line.trim()
+			jsonObj = line.split(' ')	
+
+			for( x = 0; x < jsonObj.length; x++ ) {
+				if(jsonObj[x] != '') {
+					jsonObj3[count] = jsonObj[x]
+					count++	
+				}
+			}
+		}
+		
+	
+		if(line != '' && lineCount != 0) {
+			console.log(line)
+			var randomArray = new Array()
+			randomArray.push(jsonObj3)
+			randomArray.push(line.trim())
+
+			jsonObj2[lineCount] = randomArray
+		}
+
+		lineCount++
+		
+		
+
 		// ...do your asynchronous line processing..
 		setTimeout(function () {
 			// ...and continue emitting lines.
 			lr.resume()
-		}, 100)
+			
+		}, 10)
 	})
 
 	lr.on('end', function () {
 	// All lines are read, file is closed now.
-	})
-
-	res.send('wise man once said')
-})
+		fs.writeFile('test.json', JSON.stringify(jsonObj2))
+		res.send(jsonObj2)
+	})})
 
 app.listen('8081')
 
