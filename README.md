@@ -18,3 +18,11 @@ looking into another PDF parser, pdftojson is not working well, almost sure its 
 #https://www.npmjs.com/package/pdf-to-text
 PDF to text works, follow install instructions 
 can build json with this, currently just a string
+
+
+##https://stackoverflow.com/questions/31657501/reading-and-extracting-data-from-a-text-file-in-javascript
+looking into file consumption here
+
+##https://www.npmjs.com/package/line-by-line
+
+
