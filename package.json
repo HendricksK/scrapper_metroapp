@@ -7,6 +7,7 @@
   "dependencies": {
     "cheerio": "latest",
     "express": "latest",
+    "line-by-line": "^0.1.5",
     "pdf-to-text": "0.0.6",
     "pdf2json": "^1.1.7",
     "request": "latest",

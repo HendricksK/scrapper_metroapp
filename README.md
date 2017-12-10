@@ -24,5 +24,14 @@ can build json with this, currently just a string
 looking into file consumption here
 
 ##https://www.npmjs.com/package/line-by-line
+working on pulling line by line from file,
+will look into building a script instead of using express to trigger
+the functions... 
+
+also need to build a function on the API side to save data to the DB,
+save entire 'nice' docs to API for cacheing and then, which will require building
+nice json objects for couch DB
+
+then let the API pull it all into MYSQL tables...
 
 
