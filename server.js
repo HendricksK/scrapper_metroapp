@@ -7,6 +7,8 @@ var exec = require('child_process').exec
 //let instantiations 
 let fs 		= require('fs'), PDFParser = require('pdf2json')
 
+let fileName = ''
+
 app.get('/scrape', function(req, res){
 
 	var url = 'http://capetowntrains.freeblog.site/timetables'
@@ -58,18 +60,23 @@ app.get('/pdf-util', function(req, res) {
 
 	var pdfUtil = require('pdf-to-text')
 	var pdf_path = 'downloads/metro/pdfs/28.pdf'
-
-	var option = {from: 0, to: 2}
+	var jsonData = new Object()
+	var option = {from: 0, to: 1}
  
-	pdfUtil.pdfToText(pdf_path, option, function(err, data) {
-	  if (err) throw(err)
-	  console.log(data) //print text     
+	pdfUtil.info(pdf_path, function(err, info) {
+		if (err) throw(err)
+		console.log(info)
+		fileName = info.title
 	})
 	 
 	//Omit option to extract all text from the pdf file 
 	pdfUtil.pdfToText(pdf_path, function(err, data) {
-	  if (err) throw(err)
-	  console.log(data) //print all text     
+	  	if (err) throw(err)
+	  	// console.log(data) //print all text
+		jsonData[0] = data
+		fs.writeFile(fileName + '.txt', data)
+		fs.writeFile('content_json.json', jsonData[0]) 
+		res.send(data)    
 	})
 
 })
