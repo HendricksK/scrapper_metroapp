@@ -34,4 +34,5 @@ nice json objects for couch DB
 
 then let the API pull it all into MYSQL tables...
 
-
+look into using GREP tools for pulling unnecessary lines from files
+https://www.npmjs.com/browse/keyword/grep
