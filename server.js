@@ -84,7 +84,8 @@ app.get('/pdf-util', function(req, res) {
 
 app.get('/line-by-line', function(req, res) {
 
-	var jsonObj = {}, jsonObj2 = {}, count = 0, doc = '', jsonObj3 = {}, stringOfRandomStuffHere = 'STATION NAME.'
+	var jsonObj = {}, jsonObj2 = {}, count = 0, doc = '', jsonObj3 = {}, stringOfRandomStuffHere = ''
+	var anotherCounter = 0
 
     var lr = new LineByLineReader('DOCS_CMR3-#259623-v12-POCKET_NORTH_2014.XLS.txt')
 
@@ -106,23 +107,24 @@ app.get('/line-by-line', function(req, res) {
 			line = line.trim()
 			jsonObj = line.split(' ')	
 			
-			for( x = 0; x < jsonObj.length; x++ ) {
-				if(jsonObj[x] != '') {
-					stringOfRandomStuffHere = stringOfRandomStuffHere + '    ' + jsonObj[x]
-					jsonObj3[count] = jsonObj[x]
-					count++	
-				}
-			}
+			// for( x = 0; x < jsonObj.length; x++ ) {
+			// 	if(jsonObj[x] != '') {
+			// 		stringOfRandomStuffHere = stringOfRandomStuffHere + ',' + jsonObj[x]
+			// 		jsonObj3[count] = jsonObj[x]
+			// 		count++	
+			// 	}
+			// }
 		}
 		
 	
 		if(line != '' && lineCount != 0) {
 			console.log(line)
 			var randomArray = new Array()
-			randomArray.push(stringOfRandomStuffHere)
+			// randomArray.push(stringOfRandomStuffHere)
 			randomArray.push(line.trim())
 
-			jsonObj2[lineCount] = randomArray
+			jsonObj2[anotherCounter] = randomArray
+			anotherCounter++
 		}
 
 		lineCount++
